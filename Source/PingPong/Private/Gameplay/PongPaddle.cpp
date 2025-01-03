@@ -10,10 +10,10 @@ APongPaddle::APongPaddle(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
-	const ConstructorHelpers::FObjectFinder<UPaperSprite> BallRef(TEXT("PaperSprite'/Game/Sprites/Paddle.Paddle'"));
+	const ConstructorHelpers::FObjectFinder<UPaperSprite> PaddleRef(TEXT("PaperSprite'/Game/Sprites/Paddle.Paddle'"));
 
 	Sprite = ObjectInitializer.CreateDefaultSubobject<UPaperSpriteComponent>(this, TEXT("SpriteComponent"));
-	Sprite->SetSprite(BallRef.Object);
+	Sprite->SetSprite(PaddleRef.Object);
 }
 
 // Called when the game starts or when spawned

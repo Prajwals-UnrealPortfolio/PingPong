@@ -10,10 +10,10 @@ APongGoal::APongGoal(const FObjectInitializer& ObjectInitializer) : Super(Object
 	PrimaryActorTick.bCanEverTick = false;
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
-	const ConstructorHelpers::FObjectFinder<UPaperSprite> BoundsRef(TEXT("PaperSprite'/Game/Sprites/Goal.Goal'"));
+	const ConstructorHelpers::FObjectFinder<UPaperSprite> GoalRef(TEXT("PaperSprite'/Game/Sprites/Goal.Goal'"));
 
 	Sprite = ObjectInitializer.CreateDefaultSubobject<UPaperSpriteComponent>(this, TEXT("SpriteComponent"));
-	Sprite->SetSprite(BoundsRef.Object);
+	Sprite->SetSprite(GoalRef.Object);
 }
 
 // Called when the game starts or when spawned
