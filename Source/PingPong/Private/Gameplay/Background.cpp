@@ -2,8 +2,8 @@
 
 
 #include "Gameplay/Background.h"
-#include "Paper2D/Classes/PaperSpriteComponent.h"
-#include "Paper2D/Classes/PaperSprite.h"
+#include "PaperSpriteComponent.h"
+#include "PaperSprite.h"
 
 ABackground::ABackground(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
