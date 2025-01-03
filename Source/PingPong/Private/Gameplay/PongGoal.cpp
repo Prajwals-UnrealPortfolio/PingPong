@@ -1,0 +1,32 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Gameplay/PongGoal.h"
+#include "PaperSpriteComponent.h"
+#include "PaperSprite.h"
+
+APongGoal::APongGoal(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bStartWithTickEnabled = false;
+
+	const ConstructorHelpers::FObjectFinder<UPaperSprite> GoalRef(TEXT("PaperSprite'/Game/Sprites/Goal.Goal'"));
+
+	Sprite = ObjectInitializer.CreateDefaultSubobject<UPaperSpriteComponent>(this, TEXT("SpriteComponent"));
+	Sprite->SetSprite(GoalRef.Object);
+}
+
+// Called when the game starts or when spawned
+void APongGoal::BeginPlay()
+{
+	Super::BeginPlay();
+	
+}
+
+// Called every frame
+void APongGoal::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
