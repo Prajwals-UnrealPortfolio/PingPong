@@ -18,5 +18,5 @@ public:
 
 	APongCamera(const FObjectInitializer& ObjectInitializer);
 
-	FVector2D GetViewDimensions();
+	FVector2D GetViewDimensions() const;
 };

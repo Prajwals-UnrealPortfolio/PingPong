@@ -13,12 +13,14 @@ APongCamera::APongCamera(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	PongCameraComponent->SetAbsolute(true, true, true);
 }
 
-FVector2D APongCamera::GetViewDimensions()
+FVector2D APongCamera::GetViewDimensions() const
 {
 	UCameraComponent* PongCameraComponent = GetCameraComponent();
 	FVector2D Dimensions;
+	const float AspectRatio = PongCameraComponent->AspectRatio;
+	check(AspectRatio > 0.0f);
 	Dimensions.X = PongCameraComponent->OrthoWidth;
-	Dimensions.Y = 1/ (PongCameraComponent->AspectRatio / PongCameraComponent->OrthoWidth);
+	Dimensions.Y = PongCameraComponent->OrthoWidth / AspectRatio;
 	UE_LOG(LogTemp, Warning, TEXT("Ortho Width : %f"),Dimensions.X);
 	UE_LOG(LogTemp, Warning, TEXT("Aspect Ratio : %f"),PongCameraComponent->AspectRatio);
 	return Dimensions;

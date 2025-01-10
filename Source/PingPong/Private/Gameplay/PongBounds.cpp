@@ -39,11 +39,8 @@ void APongBounds::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void APongBounds::SetScale(FVector& Vector)
+void APongBounds::SetScale(const FVector& Vector)
 {
-	Vector.X = FMath::Max(Vector.X, 0.01f);
-	Vector.Y = FMath::Max(Vector.Y, 0.01f);
-	Vector.Z = FMath::Max(Vector.Z, 0.01f);
 	Sprite->SetRelativeScale3D(Vector);
 }
 

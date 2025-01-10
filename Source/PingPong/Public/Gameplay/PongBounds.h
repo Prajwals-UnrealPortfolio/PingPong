@@ -24,7 +24,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void SetScale( FVector& Vector );
+	void SetScale( const FVector& Vector );
 	
 private:
 

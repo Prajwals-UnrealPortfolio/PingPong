@@ -109,7 +109,7 @@ void APongPaddle::Move(const FInputActionValue& Value)
 	{
 		FVector Location = GetActorLocation();
 		Location += Direction * InputDirection * FApp::GetDeltaTime();
-		Sprite->SetWorldLocation(Location);
+		SetActorLocation(Location);
 	}
 }
 
