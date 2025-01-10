@@ -41,4 +41,11 @@ void ABackground::SetDimensions(const FVector2D& Dimensions) const
 	SetHeight(Dimensions.Y);
 }
 
+FVector ABackground::GetScale() const
+{
+	return Sprite->GetRelativeScale3D();
+}
+
+
+
 
