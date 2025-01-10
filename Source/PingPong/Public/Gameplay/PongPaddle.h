@@ -6,6 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "PongPaddle.generated.h"
 
+class UInputAction;
+struct FInputActionValue;
+class UInputMappingContext;
 class UPaperSpriteComponent;
 
 UCLASS()
@@ -28,8 +31,26 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+
+	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
+
 private:
 
+	UPROPERTY(VisibleAnywhere)
 	UPaperSpriteComponent* Sprite;
 
+	UPROPERTY(VisibleAnywhere)
+	UInputMappingContext* DefaultMappingContext;
+
+	UPROPERTY(VisibleAnywhere)
+	UInputAction* MoveAction;
+
+	void Move(const FInputActionValue& Value);
+
+	bool MoveUp;
+	bool MoveDown;
+
+	UPROPERTY(VisibleAnywhere, Category = "Movement")
+	float InputDirection;
 };

@@ -20,7 +20,10 @@ APongBall::APongBall(const FObjectInitializer& ObjectInitializer) : Super(Object
 void APongBall::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Sprite->SetRelativeLocation( FVector( 0.0f, 10.0f, 0.0f ) );
+	Sprite->SetRelativeScale3D( FVector( 0.07f, 1.0f, 0.07f ) );
+	Sprite->SetAbsolute( true, true, true );
 }
 
 // Called every frame

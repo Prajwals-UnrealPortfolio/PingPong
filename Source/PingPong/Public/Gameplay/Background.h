@@ -19,6 +19,8 @@ public:
 	
 	void SetDimensions(const FVector2D& Dimensions) const;
 
+	FVector GetScale() const;
+
 private:
 
 	void SetWidth(float Width) const;
