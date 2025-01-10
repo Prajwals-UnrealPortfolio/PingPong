@@ -24,7 +24,7 @@ void APongGameMode::StartPlay()
 	{
 		FActorSpawnParameters SpawnParameters;
 		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		APongCamera* PongCamera = Cast<APongCamera>(World->SpawnActor(APongCamera::StaticClass(), nullptr, nullptr, SpawnParameters));
+		APongCamera* PongCamera = World->SpawnActor<APongCamera>(APongCamera::StaticClass(),SpawnParameters);
 		
 		if(!ensure(PongCamera))
 		{
@@ -40,15 +40,15 @@ void APongGameMode::StartPlay()
 		}
 		PlayerController->SetViewTarget(PongCamera);
 		
-		ABackground* Background = Cast<ABackground>(World->SpawnActor(ABackground::StaticClass()));
+		ABackground* Background = World->SpawnActor<ABackground>(ABackground::StaticClass(), SpawnParameters);
 		FVector2D Dimensions = PongCamera->GetViewDimensions();
 		Background->SetDimensions(Dimensions);
 
 		World->SpawnActor(APongBall::StaticClass());
 
 		FVector Scale = Background->GetScale();
-		APongBounds* bounds = Cast<APongBounds>(World->SpawnActor( APongBounds::StaticClass() ));
-		bounds->SetScale( Scale );
+		APongBounds* Bounds = World->SpawnActor<APongBounds>( APongBounds::StaticClass(), SpawnParameters);
+		Bounds->SetScale( Scale );
 	}
 	Super::StartMatch();
 }

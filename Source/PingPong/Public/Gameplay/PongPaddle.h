@@ -47,7 +47,6 @@ private:
 	UInputAction* MoveAction;
 
 	void Move(const FInputActionValue& Value);
-	void MoveInput(float Value);
 
 	bool MoveUp;
 	bool MoveDown;

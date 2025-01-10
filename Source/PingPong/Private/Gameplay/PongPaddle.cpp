@@ -11,11 +11,10 @@
 #include "PaperSpriteComponent.h"
 #include "PaperSprite.h"
 #include "Controllers/PongPlayerController.h"
-#include "GameFramework/InputSettings.h"
-#include "GameFramework/PawnMovementComponent.h"
 
 
-APongPaddle::APongPaddle(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+APongPaddle::APongPaddle(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer),
+InputDirection(0.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
@@ -105,7 +104,7 @@ void APongPaddle::Move(const FInputActionValue& Value)
 {
 	FVector Direction = FVector( 0.0f, 0.0f, 75.0f );
 	InputDirection = Value.Get<float>();
-	InputDirection = FMath::Clamp(InputDirection, -1,1);
+	InputDirection = FMath::Clamp(InputDirection, -1.f,1.f);
 	if((MoveUp && InputDirection>0) || (MoveDown && InputDirection<0) )
 	{
 		FVector Location = GetActorLocation();
