@@ -16,8 +16,8 @@
 APongPaddle::APongPaddle(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer),
 InputDirection(0.f)
 {
-	PrimaryActorTick.bCanEverTick = true;
-	PrimaryActorTick.bStartWithTickEnabled = true;
+	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	const ConstructorHelpers::FObjectFinder<UPaperSprite> PaddleRef(TEXT("PaperSprite'/Game/Sprites/Paddle.Paddle'"));
 	const ConstructorHelpers::FObjectFinder<UInputMappingContext> DefaultMappingRef(TEXT("InputMappingContext'/Game/Input/IMC_Player.IMC_Player'"));
@@ -28,6 +28,8 @@ InputDirection(0.f)
 	Sprite->GetBodyInstance()->SetCollisionEnabled( ECollisionEnabled::QueryAndPhysics );
 	Sprite->GetBodyInstance()->SetObjectType( ECollisionChannel::ECC_Pawn );
 	Sprite->GetBodyInstance()->SetResponseToChannel( ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap );
+	check(DefaultMappingRef.Succeeded());
+	check(MovementActionRef.Succeeded());
 	DefaultMappingContext = DefaultMappingRef.Object;
 	MoveAction = MovementActionRef.Object;
 
@@ -70,7 +72,10 @@ void APongPaddle::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	
 	if(UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APongPaddle::Move);
+		if (EnhancedInputComponent)
+		{
+			EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APongPaddle::Move);
+		}
 	}
 }
 
@@ -78,7 +83,6 @@ void APongPaddle::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	if ( OtherActor->ActorHasTag("Bounds"))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin"));
 		if ( InputDirection > 0.0f )
 		{
 			MoveUp = false;
@@ -94,7 +98,6 @@ void APongPaddle::NotifyActorEndOverlap(AActor* OtherActor)
 {
 	if ( OtherActor->ActorHasTag("Bounds") )
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Overlap Ends"));
 		MoveUp = true;
 		MoveDown = true;
 	}
@@ -108,7 +111,7 @@ void APongPaddle::Move(const FInputActionValue& Value)
 	if((MoveUp && InputDirection>0) || (MoveDown && InputDirection<0) )
 	{
 		FVector Location = GetActorLocation();
-		Location += Direction * InputDirection * FApp::GetDeltaTime();
+		Location += Direction * InputDirection * GetWorld()->GetDeltaSeconds();
 		SetActorLocation(Location);
 	}
 }
