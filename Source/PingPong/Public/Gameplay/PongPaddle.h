@@ -52,5 +52,6 @@ private:
 	bool MoveUp;
 	bool MoveDown;
 
+	UPROPERTY(VisibleAnywhere, Category = "Movement")
 	float InputDirection;
 };

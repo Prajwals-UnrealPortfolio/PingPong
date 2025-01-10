@@ -22,8 +22,23 @@ void APongGameMode::StartPlay()
 	UWorld* const World = GetWorld();
 	if(World)
 	{
-		APongCamera* PongCamera = Cast<APongCamera>(World->SpawnActor(APongCamera::StaticClass()));
-		World->GetFirstPlayerController()->SetViewTarget(PongCamera);
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		APongCamera* PongCamera = Cast<APongCamera>(World->SpawnActor(APongCamera::StaticClass(), nullptr, nullptr, SpawnParameters));
+		
+		if(!ensure(PongCamera))
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to spawn PongCamera"));
+			return;
+		}
+		
+		APlayerController* PlayerController = World->GetFirstPlayerController();
+		if (!ensure(PlayerController))
+		{
+		    UE_LOG(LogTemp, Error, TEXT("Failed to get PlayerController"));
+		    return;
+		}
+		PlayerController->SetViewTarget(PongCamera);
 		
 		ABackground* Background = Cast<ABackground>(World->SpawnActor(ABackground::StaticClass()));
 		FVector2D Dimensions = PongCamera->GetViewDimensions();

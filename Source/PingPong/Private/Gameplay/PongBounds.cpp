@@ -19,7 +19,9 @@ APongBounds::APongBounds(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	Sprite->GetBodyInstance()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	Sprite->GetBodyInstance()->SetObjectType(ECollisionChannel::ECC_WorldStatic);
 
-	// Sprite->SetVisibility(false);
+	Sprite->SetVisibility(false);
+	
+	Tags.Add(FName("Bounds"));
 }
 
 // Called when the game starts or when spawned
@@ -29,20 +31,19 @@ void APongBounds::BeginPlay()
 
 	Sprite->SetRelativeLocation( FVector( 0.0f, 10.f, -10.0f ) );
 	Sprite->SetAbsolute( true, true, true );
-
-	Rename( TEXT( "Bounds" ) );
-	UE_LOG(LogTemp, Warning, TEXT("Name : %s"), *GetName());
 }
 
 // Called every frame
 void APongBounds::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void APongBounds::SetScale(FVector& Vector)
 {
+	Vector.X = FMath::Max(Vector.X, 0.01f);
+	Vector.Y = FMath::Max(Vector.Y, 0.01f);
+	Vector.Z = FMath::Max(Vector.Z, 0.01f);
 	Sprite->SetRelativeScale3D(Vector);
 }
 

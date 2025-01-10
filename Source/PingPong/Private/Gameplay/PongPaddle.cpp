@@ -44,16 +44,18 @@ void APongPaddle::BeginPlay()
     Sprite->SetRelativeRotation( FRotator( 0.f, 0.f, 0.f ) );
     Sprite->SetRelativeScale3D( FVector( 0.1f, 1.0f, 0.1f ) );
     Sprite->SetAbsolute( true, true, true );
-	
-	if(APongPlayerController* PongPlayerController = Cast<APongPlayerController>(Controller))
+
+	if(Controller)
 	{
-		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PongPlayerController->GetLocalPlayer()))
+		if(APongPlayerController* PongPlayerController = Cast<APongPlayerController>(Controller))
 		{
-			Subsystem->ClearAllMappings();
-			Subsystem->AddMappingContext(DefaultMappingContext,0);
+			if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PongPlayerController->GetLocalPlayer()))
+			{
+				Subsystem->ClearAllMappings();
+				Subsystem->AddMappingContext(DefaultMappingContext,0);
+			}
 		}
 	}
-	
 }
 
 // Called every frame
@@ -66,8 +68,6 @@ void APongPaddle::Tick(float DeltaTime)
 void APongPaddle::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	// InputComponent->BindAxis("Move", this, &APongPaddle::MoveInput);
 	
 	if(UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
@@ -77,7 +77,7 @@ void APongPaddle::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void APongPaddle::NotifyActorBeginOverlap(AActor* OtherActor)
 {
-	if(OtherActor->GetName().Equals("Bounds"))
+	if ( OtherActor->ActorHasTag("Bounds"))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin"));
 		if ( InputDirection > 0.0f )
@@ -93,7 +93,7 @@ void APongPaddle::NotifyActorBeginOverlap(AActor* OtherActor)
 
 void APongPaddle::NotifyActorEndOverlap(AActor* OtherActor)
 {
-	if ( OtherActor->GetName().Equals( "Bounds" ) )
+	if ( OtherActor->ActorHasTag("Bounds") )
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Overlap Ends"));
 		MoveUp = true;
@@ -105,11 +105,12 @@ void APongPaddle::Move(const FInputActionValue& Value)
 {
 	FVector Direction = FVector( 0.0f, 0.0f, 75.0f );
 	InputDirection = Value.Get<float>();
+	InputDirection = FMath::Clamp(InputDirection, -1,1);
 	if((MoveUp && InputDirection>0) || (MoveDown && InputDirection<0) )
 	{
-		FVector location = GetActorLocation();
-		location += Direction * InputDirection * FApp::GetDeltaTime();
-		Sprite->SetRelativeLocation( location );
+		FVector Location = GetActorLocation();
+		Location += Direction * InputDirection * FApp::GetDeltaTime();
+		Sprite->SetWorldLocation(Location);
 	}
 }
 
