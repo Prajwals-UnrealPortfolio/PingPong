@@ -48,6 +48,6 @@ void APongGoal::SetPosition(FVector& Position)
 
 float APongGoal::GetWidth()
 {
-	return GetActorRelativeScale3D().X;
+	return Sprite->GetSprite()->GetSourceSize().X;
 }
 

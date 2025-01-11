@@ -87,9 +87,21 @@ void APongGameMode::StartPlay()
 	//Paddles
 	APongPaddle* PlayerPaddle = Cast<APongPaddle>(World->GetFirstPlayerController()->GetPawn());
 	APongPaddleAI* AIPaddle = World->SpawnActor<APongPaddleAI>(APongPaddleAI::StaticClass(), SpawnParameters);
+
+	if (!ensure(PlayerPaddle))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to spawn PlayerPaddle"));
+		return;
+	}
+
+	if (!ensure(AIPaddle))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to spawn AIPaddle"));
+		return;
+	}
 	PlayerPaddle->Tags.Add(FName("PlayerPaddle"));
 	AIPaddle->Tags.Add(FName("AIPaddle"));
-
+	
 	FVector PlayerPos, AIPos;
 	PlayerPos.Y = 10.f;
 	AIPos.Y = 10.f;

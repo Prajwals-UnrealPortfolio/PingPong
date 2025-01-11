@@ -16,8 +16,7 @@
 APongPaddle::APongPaddle(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer),
 InputDirection(0.f)
 {
-	PrimaryActorTick.bCanEverTick = false;
-	PrimaryActorTick.bStartWithTickEnabled = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	const ConstructorHelpers::FObjectFinder<UPaperSprite> PaddleRef(TEXT("PaperSprite'/Game/Sprites/Paddle.Paddle'"));
 	const ConstructorHelpers::FObjectFinder<UInputMappingContext> DefaultMappingRef(TEXT("InputMappingContext'/Game/Input/IMC_Player.IMC_Player'"));
@@ -125,12 +124,12 @@ FVector APongPaddle::GetPosition()
 void APongPaddle::Move(const FInputActionValue& Value)
 {
 	InputDirection = Value.Get<float>();
-	Velocity = InputDirection * 350.f;
+	Velocity = InputDirection * 150.f;
 	InputDirection = FMath::Clamp(InputDirection, -1.f,1.f);
 	if((MoveUp && InputDirection>0) || (MoveDown && InputDirection<0) )
 	{
 		FVector Location = GetActorLocation();
-		Location += FVector::UpVector * 350.f * InputDirection * GetWorld()->GetDeltaSeconds();
+		Location += FVector::UpVector * 150.f * InputDirection * GetWorld()->GetDeltaSeconds();
 		SetActorLocation(Location);
 	}
 }

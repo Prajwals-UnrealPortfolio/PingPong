@@ -14,7 +14,7 @@ APongPaddleAI::APongPaddleAI(const FObjectInitializer& ObjectInitializer) : Supe
 void APongPaddleAI::BeginPlay()
 {
 	Super::BeginPlay();
-	Sprite->SetRelativeLocation( FVector( 200.0f, 50.f, 0.0f ) );
+	Sprite->SetRelativeLocation( FVector( 200.0f, 10.f, 0.0f ) );
 	Sprite->SetRelativeRotation( FRotator( 0.f, 0.f, 0.f ) );
 }
 

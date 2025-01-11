@@ -3,6 +3,7 @@
 
 #include "Gameplay/PongBall.h"
 
+#include "AI/PongPaddleAI.h"
 #include "Gameplay/PongPaddle.h"
 #include "Paper2D/Classes/PaperSpriteComponent.h"
 #include "Paper2D/Classes/PaperSprite.h"

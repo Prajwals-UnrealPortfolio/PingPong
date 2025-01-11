@@ -45,8 +45,7 @@ protected:
 	UPaperSpriteComponent* Sprite;
 	
 	void Move(const FInputActionValue& Value);
-	
-private:
+
 	UPROPERTY(VisibleAnywhere)
 	UInputMappingContext* DefaultMappingContext;
 
@@ -60,4 +59,7 @@ private:
 	float InputDirection;
 
 	float Velocity;
+	
+private:
+	
 };
