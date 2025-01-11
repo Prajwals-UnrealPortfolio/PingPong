@@ -20,6 +20,7 @@ APongBounds::APongBounds(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	Sprite->GetBodyInstance()->SetObjectType(ECollisionChannel::ECC_WorldStatic);
 
 	Sprite->SetVisibility(false);
+	RootComponent = Sprite;
 	
 	Tags.Add(FName("Bounds"));
 }

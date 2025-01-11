@@ -28,6 +28,13 @@ InputDirection(0.f)
 	Sprite->GetBodyInstance()->SetCollisionEnabled( ECollisionEnabled::QueryAndPhysics );
 	Sprite->GetBodyInstance()->SetObjectType( ECollisionChannel::ECC_Pawn );
 	Sprite->GetBodyInstance()->SetResponseToChannel( ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Overlap );
+	Sprite->SetSimulatePhysics(false);
+
+	Sprite->SetRelativeLocation( FVector( -500.0f, 10.f, 0.0f ) );
+	Sprite->SetRelativeRotation( FRotator( 0.f, 0.f, 0.f ) );
+	Sprite->SetRelativeScale3D( FVector( 0.1f, 1.0f, 0.1f ) );
+	
+	RootComponent = Sprite;
 	check(DefaultMappingRef.Succeeded());
 	check(MovementActionRef.Succeeded());
 	DefaultMappingContext = DefaultMappingRef.Object;
@@ -41,11 +48,12 @@ InputDirection(0.f)
 void APongPaddle::BeginPlay()
 {
 	Super::BeginPlay();
-	Sprite->SetRelativeLocation( FVector( -200.0f, 10.f, 0.0f ) );
-    Sprite->SetRelativeRotation( FRotator( 0.f, 0.f, 0.f ) );
-    Sprite->SetRelativeScale3D( FVector( 0.1f, 1.0f, 0.1f ) );
-    Sprite->SetAbsolute( true, true, true );
 
+	Sprite->SetRelativeLocation( FVector( -500.0f, 10.f, 0.0f ) );
+	Sprite->SetRelativeRotation( FRotator( 0.f, 0.f, 0.f ) );
+	Sprite->SetRelativeScale3D( FVector( 0.1f, 1.0f, 0.1f ) );
+	Sprite->SetAbsolute( true, true, true );
+	
 	if(Controller)
 	{
 		if(APongPlayerController* PongPlayerController = Cast<APongPlayerController>(Controller))
@@ -70,13 +78,14 @@ void APongPaddle::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
-	if(UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	if(UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		if (EnhancedInputComponent)
 		{
 			EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APongPaddle::Move);
 		}
 	}
+	Velocity = 0.0f;
 }
 
 void APongPaddle::NotifyActorBeginOverlap(AActor* OtherActor)
@@ -103,15 +112,25 @@ void APongPaddle::NotifyActorEndOverlap(AActor* OtherActor)
 	}
 }
 
+float APongPaddle::GetZVelocity()
+{
+	return Velocity;
+}
+
+FVector APongPaddle::GetPosition()
+{
+	return GetActorLocation();
+}
+
 void APongPaddle::Move(const FInputActionValue& Value)
 {
-	FVector Direction = FVector( 0.0f, 0.0f, 75.0f );
 	InputDirection = Value.Get<float>();
+	Velocity = InputDirection * 350.f;
 	InputDirection = FMath::Clamp(InputDirection, -1.f,1.f);
 	if((MoveUp && InputDirection>0) || (MoveDown && InputDirection<0) )
 	{
 		FVector Location = GetActorLocation();
-		Location += Direction * InputDirection * GetWorld()->GetDeltaSeconds();
+		Location += FVector::UpVector * 350.f * InputDirection * GetWorld()->GetDeltaSeconds();
 		SetActorLocation(Location);
 	}
 }
