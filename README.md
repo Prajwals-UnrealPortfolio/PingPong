@@ -19,6 +19,7 @@ Clone this repository to your local machine:
 
 Copy
 git clone https://github.com/Prajwals-UnrealPortfolio/PingPong.git
+
 Open the Unreal Engine 5 launcher and select the cloned project.
 
 Once project files are loaded, press the Play button in the Unreal Engine editor to start the game.
