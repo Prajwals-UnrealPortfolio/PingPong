@@ -25,8 +25,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void StartMove();
+
+	virtual void NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
+
 private:
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = Ball, meta=(AllowPrivateAccess = "true"))
 	UPaperSpriteComponent* Sprite;
+
+	FVector Direction;
+
+	float Velocity;
 
 };

@@ -14,6 +14,12 @@ APongGoal::APongGoal(const FObjectInitializer& ObjectInitializer) : Super(Object
 
 	Sprite = ObjectInitializer.CreateDefaultSubobject<UPaperSpriteComponent>(this, TEXT("SpriteComponent"));
 	Sprite->SetSprite(GoalRef.Object);
+	RootComponent = Sprite;
+
+	Sprite->GetBodyInstance()->SetCollisionEnabled( ECollisionEnabled::QueryOnly );
+	Sprite->GetBodyInstance()->SetObjectType( ECollisionChannel::ECC_WorldStatic );
+	Sprite->GetBodyInstance()->SetResponseToAllChannels( ECollisionResponse::ECR_Overlap );
+	Sprite->SetVisibility( false );
 }
 
 // Called when the game starts or when spawned
@@ -28,5 +34,20 @@ void APongGoal::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void APongGoal::SetScale(FVector& Vector)
+{
+	SetActorRelativeScale3D(Vector);
+}
+
+void APongGoal::SetPosition(FVector& Position)
+{
+	SetActorRelativeLocation(Position);
+}
+
+float APongGoal::GetSourceWidth()
+{
+	return Sprite->GetSprite()->GetSourceSize().X * GetActorRelativeScale3D().X;
 }
 

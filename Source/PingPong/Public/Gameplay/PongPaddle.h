@@ -35,22 +35,31 @@ public:
 
 	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
 
-private:
+	float GetZVelocity();
+	
+	FVector GetPosition();
 
-	UPROPERTY(VisibleAnywhere)
+protected:
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = Paddle)
 	UPaperSpriteComponent* Sprite;
+	
+	void Move(const FInputActionValue& Value);
 
 	UPROPERTY(VisibleAnywhere)
 	UInputMappingContext* DefaultMappingContext;
 
 	UPROPERTY(VisibleAnywhere)
 	UInputAction* MoveAction;
-
-	void Move(const FInputActionValue& Value);
-
+	
 	bool MoveUp;
 	bool MoveDown;
 
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
 	float InputDirection;
+
+	float Velocity;
+	
+private:
+	
 };

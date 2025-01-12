@@ -14,6 +14,7 @@ ABackground::ABackground(const FObjectInitializer& ObjectInitializer) : Super(Ob
 
 	Sprite = ObjectInitializer.CreateDefaultSubobject<UPaperSpriteComponent>(this, TEXT("SpriteComponent"));
 	Sprite->SetSprite(BackgroundSpriteRef.Object);
+	RootComponent = Sprite;
 	
 }
 
