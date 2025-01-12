@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AI/PongPaddleAI.h"
 #include "GameFramework/GameState.h"
 #include "PongGameState.generated.h"
 
