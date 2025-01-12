@@ -19,7 +19,7 @@ APongGoal::APongGoal(const FObjectInitializer& ObjectInitializer) : Super(Object
 	Sprite->GetBodyInstance()->SetCollisionEnabled( ECollisionEnabled::QueryOnly );
 	Sprite->GetBodyInstance()->SetObjectType( ECollisionChannel::ECC_WorldStatic );
 	Sprite->GetBodyInstance()->SetResponseToAllChannels( ECollisionResponse::ECR_Overlap );
-	Sprite->SetVisibility( false );
+	Sprite->SetVisibility( true );
 }
 
 // Called when the game starts or when spawned
@@ -48,6 +48,6 @@ void APongGoal::SetPosition(FVector& Position)
 
 float APongGoal::GetSourceWidth()
 {
-	return Sprite->GetSprite()->GetSourceSize().X * GetActorRelativeScale3D().X;
+	return Sprite->GetSprite()->GetSourceSize().X;
 }
 

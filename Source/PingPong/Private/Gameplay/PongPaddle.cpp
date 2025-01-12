@@ -39,8 +39,8 @@ InputDirection(0.f)
 	DefaultMappingContext = DefaultMappingRef.Object;
 	MoveAction = MovementActionRef.Object;
 
-	MoveUp = true;
-	MoveDown = true;
+	bMoveUp = true;
+	bMoveDown = true;
 }
 
 // Called when the game starts or when spawned
@@ -93,11 +93,11 @@ void APongPaddle::NotifyActorBeginOverlap(AActor* OtherActor)
 	{
 		if ( InputDirection > 0.0f )
 		{
-			MoveUp = false;
+			bMoveUp = false;
 		}
 		else if ( InputDirection < 0.0f )
 		{
-			MoveDown = false;
+			bMoveDown = false;
 		}
 	}
 }
@@ -106,8 +106,8 @@ void APongPaddle::NotifyActorEndOverlap(AActor* OtherActor)
 {
 	if ( OtherActor->ActorHasTag("Bounds") )
 	{
-		MoveUp = true;
-		MoveDown = true;
+		bMoveUp = true;
+		bMoveDown = true;
 	}
 }
 
@@ -121,12 +121,26 @@ FVector APongPaddle::GetPosition()
 	return GetActorLocation();
 }
 
+void APongPaddle::Reset()
+{
+	Sprite->SetRelativeLocation( FVector( -500.0f, 10.f, 0.0f ) );
+	Sprite->SetRelativeRotation( FRotator( 0.f, 0.f, 0.f ) );
+	Sprite->SetRelativeScale3D( FVector( 0.1f, 1.0f, 0.1f ) );
+	bMoveUp = true;
+	bMoveDown = true;
+}
+
+void APongPaddle::SetMoveAble(bool bCanMove)
+{
+	this->bMoveAble = bCanMove;
+}
+
 void APongPaddle::Move(const FInputActionValue& Value)
 {
 	InputDirection = Value.Get<float>();
 	Velocity = InputDirection * 350.f;
 	InputDirection = FMath::Clamp(InputDirection, -1.f,1.f);
-	if((MoveUp && InputDirection>0) || (MoveDown && InputDirection<0) )
+	if((bMoveUp && bMoveAble && InputDirection>0) || (bMoveDown && bMoveAble && InputDirection<0) )
 	{
 		FVector Location = GetActorLocation();
 		Location += FVector::UpVector * 350.f * InputDirection * GetWorld()->GetDeltaSeconds();

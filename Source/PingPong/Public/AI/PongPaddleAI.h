@@ -25,6 +25,8 @@ public:
 
 	void SetBall(APongBall* Ball);
 
+	virtual void Reset() override;
+
 private:
 
 	APongBall* PongBall;
