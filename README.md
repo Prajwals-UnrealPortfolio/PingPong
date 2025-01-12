@@ -2,7 +2,9 @@
 Ping Pong Game
 
 Pong Game in Unreal Engine 5
-Welcome to the Pong Game, a classic arcade game recreated in Unreal Engine 5. This project showcases the basic mechanics of the iconic game with modern graphics and intuitive gameplay. Whether you're a developer seeking to learn more about game development with Unreal Engine or a player eager to relive the old-school fun, this project is for you!
+Welcome to the Pong Game, a classic arcade game recreated in Unreal Engine 5. 
+This project showcases the basic mechanics of the iconic game with modern graphics and intuitive gameplay.
+Whether you're a developer seeking to learn more about game development with Unreal Engine or a player eager to relive the old-school fun, this project is for you!
 
 Features
 Classic Gameplay: Enjoy the timeless double paddle, ball mechanics synonymous with Pong.
@@ -22,7 +24,7 @@ Open the Unreal Engine 5 launcher and select the cloned project.
 Once project files are loaded, press the Play button in the Unreal Engine editor to start the game.
 
 Playing the Game
-Use the Up and Down arrow keys for Player 1 paddle control.
+Use the W and S arrow keys for Player 1 paddle control.
 
 Contributing
 Contributions are welcome! Here's how you can help:
