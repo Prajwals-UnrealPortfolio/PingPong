@@ -15,7 +15,7 @@ Basic understanding of navigating Unreal Engine for editing or development.
 Installation
 Clone this repository to your local machine:
 
-CopyReplit
+Copy
 git clone https://github.com/Prajwals-UnrealPortfolio/PingPong.git
 Open the Unreal Engine 5 launcher and select the cloned project.
 
