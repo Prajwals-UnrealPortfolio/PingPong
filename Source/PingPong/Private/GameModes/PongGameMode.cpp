@@ -78,6 +78,18 @@ void APongGameMode::StartPlay()
 	APongGoal* PlayerGoal = World->SpawnActor<APongGoal>( APongGoal::StaticClass(),SpawnParameters);
 	APongGoal* AIGoal = World->SpawnActor<APongGoal>( APongGoal::StaticClass(),SpawnParameters);
 
+	if (!ensure(PlayerGoal))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to spawn PlayerGoal"));
+		return;
+	}
+
+	if (!ensure(AIGoal))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to spawn AIGoal"));
+		return;
+	}
+	
 	PlayerGoal->SetScale(Scale);
 	AIGoal->SetScale(Scale);
 
@@ -105,8 +117,8 @@ void APongGameMode::StartPlay()
 	FVector PlayerPos, AIPos;
 	PlayerPos.Y = 10.f;
 	AIPos.Y = 10.f;
-	PlayerPos.X = PlayerPaddle->GetPosition().X - ( PlayerGoal->GetWidth() * Scale.X ) / 2;
-	AIPos.X = 5.0f + AIPaddle->GetPosition().X + ( PlayerGoal->GetWidth() * Scale.X ) / 2;
+	PlayerPos.X = PlayerPaddle->GetPosition().X - ( PlayerGoal->GetSourceWidth() * Scale.X ) / 2;
+	AIPos.X = 5.0f + AIPaddle->GetPosition().X + ( PlayerGoal->GetSourceWidth() * Scale.X ) / 2;
 	PlayerPos.Z = 0.f;
 	AIPos.Z = 0.f;
 

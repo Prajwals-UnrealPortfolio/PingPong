@@ -51,7 +51,7 @@ void APongBall::BeginPlay()
 void APongBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	float Time = (DeltaTime > 0.01f ? 0.0083f : DeltaTime);
+	float Time = DeltaTime;
 
 	FTransform Transform = GetActorTransform();
 	Transform.AddToTranslation(Direction * Velocity * Time);
@@ -71,8 +71,8 @@ void APongBall::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitive
 	Sprite->SetAllPhysicsLinearVelocity( FVector( 0.0f, 0.0f, 0.0f ) );
 
 	Direction = Direction.MirrorByVector(HitNormal);
-	
-	if (Other->ActorHasTag("Paddle"))
+	UE_LOG(LogTemp, Warning, TEXT("Notify Hit"));
+	if (Other->ActorHasTag("PlayerPaddle") || Other->ActorHasTag("AIPaddle"))
 	{
 		APongPaddle* Paddle = Cast<APongPaddle>(Other);
 		if(Paddle == nullptr)
@@ -80,6 +80,7 @@ void APongBall::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitive
 			return;
 		}
 		Direction.Z += (Paddle->GetZVelocity() / Velocity);
+		Direction.Normalize();
 	}
 }
 

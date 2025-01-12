@@ -29,7 +29,7 @@ public:
 
 	void SetPosition(FVector& Position);
 
-	float GetWidth();
+	float GetSourceWidth();
 	
 private:
 

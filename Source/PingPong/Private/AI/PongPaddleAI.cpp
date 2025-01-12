@@ -22,18 +22,27 @@ void APongPaddleAI::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if(GetActorLocation().Z > PongBall->GetActorLocation().Z)
+	if(!PongBall)
 	{
-		Move(FInputActionValue(-1.f));
+		return;
 	}
-	else if(GetActorLocation().Z < PongBall->GetActorLocation().Z)
-	{
-		Move(FInputActionValue(1.f));
-	}
-	else
+
+	const float Deadzone = 2.0f;
+	const float PositionDiff = GetActorLocation().Z - PongBall->GetActorLocation().Z;
+
+	if(FMath::Abs(PositionDiff)<=Deadzone)
 	{
 		Move(FInputActionValue(0.f));
 	}
+	else if(PositionDiff > Deadzone)
+	{
+		Move(FInputActionValue(-1.f));
+	}
+	else
+	{
+		Move(FInputActionValue(1.f));
+	}
+	
 }
 
 void APongPaddleAI::SetBall(APongBall* Ball)
