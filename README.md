@@ -31,11 +31,17 @@ Contributing
 Contributions are welcome! Here's how you can help:
 
 Fork this repository.
+
 Create your feature branch: git checkout -b feature/AmazingFeature.
+
 Commit your changes: git commit -m 'Add some amazing feature'.
+
 Push to the branch: git push origin feature/AmazingFeature.
+
 Open a pull request for review.
+
 License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Acknowledgments
