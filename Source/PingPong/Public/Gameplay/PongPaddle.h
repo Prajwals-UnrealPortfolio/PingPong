@@ -39,6 +39,10 @@ public:
 	
 	FVector GetPosition();
 
+	virtual void Reset() override;
+
+	void SetMoveAble( bool bCanMove );
+
 protected:
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = Paddle)
@@ -52,13 +56,15 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UInputAction* MoveAction;
 	
-	bool MoveUp;
-	bool MoveDown;
+	bool bMoveUp;
+	bool bMoveDown;
 
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
 	float InputDirection;
 
 	float Velocity;
+
+	bool bMoveAble;
 	
 private:
 	

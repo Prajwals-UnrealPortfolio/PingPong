@@ -12,12 +12,14 @@
 #include "Gameplay/PongGoal.h"
 #include "Gameplay/PongPaddle.h"
 #include "GameState/PongGameState.h"
+#include "HUD/PongHUD.h"
 
 APongGameMode::APongGameMode(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	PlayerControllerClass = APongPlayerController::StaticClass();
 	DefaultPawnClass = APongPaddle::StaticClass();
 	GameStateClass = APongGameState::StaticClass();
+	HUDClass = APongHUD::StaticClass();
 }
 
 void APongGameMode::StartPlay()
@@ -117,8 +119,8 @@ void APongGameMode::StartPlay()
 	FVector PlayerPos, AIPos;
 	PlayerPos.Y = 10.f;
 	AIPos.Y = 10.f;
-	PlayerPos.X = PlayerPaddle->GetPosition().X - ( PlayerGoal->GetSourceWidth() * Scale.X ) / 2;
-	AIPos.X = 5.0f + AIPaddle->GetPosition().X + ( PlayerGoal->GetSourceWidth() * Scale.X ) / 2;
+	PlayerPos.X = PlayerPaddle->GetPosition().X - 20.f - ( PlayerGoal->GetSourceWidth() * Scale.X ) / 2;
+	AIPos.X = 20.0f + AIPaddle->GetPosition().X + ( PlayerGoal->GetSourceWidth() * Scale.X ) / 2;
 	PlayerPos.Z = 0.f;
 	AIPos.Z = 0.f;
 
@@ -127,6 +129,7 @@ void APongGameMode::StartPlay()
 
 	AIPaddle->SetBall(PongBall);
 	PongGameState->SetBall(PongBall);
+	PongGameState->SetPaddles(PlayerPaddle, AIPaddle);
 	
 	Super::StartMatch();
 }

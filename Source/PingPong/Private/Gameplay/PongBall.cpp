@@ -44,7 +44,6 @@ APongBall::APongBall(const FObjectInitializer& ObjectInitializer) : Super(Object
 void APongBall::BeginPlay()
 {
 	Super::BeginPlay();
-	StartMove();
 }
 
 // Called every frame
@@ -61,11 +60,20 @@ void APongBall::Tick(float DeltaTime)
 void APongBall::StartMove()
 {
 	Direction = FVector( -1.0f, 0.0f, 0.0f );
-	Velocity = 250.0f;
+	Direction.Z = FMath::RandRange(-1.f,1.f);
+	Velocity = 300.0f;
+}
+
+void APongBall::ResetBall()
+{
+	Sprite->SetRelativeLocation( FVector( 0.0f, 10.0f, 0.0f ) );
+	Sprite->SetRelativeScale3D( FVector( 0.07f, 1.0f, 0.07f ) );
+	Direction = FVector( 0.0f, 0.0f, 0.0f );
+	Velocity = 0.0f;
 }
 
 void APongBall::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved,
-	FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
+                          FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
 {
 	Sprite->SetAllPhysicsAngularVelocityInDegrees(FVector( 0.0f, 0.0f, 0.0f ));
 	Sprite->SetAllPhysicsLinearVelocity( FVector( 0.0f, 0.0f, 0.0f ) );
@@ -80,7 +88,7 @@ void APongBall::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitive
 			return;
 		}
 		Direction.Z += (Paddle->GetZVelocity() / Velocity);
-		Direction.Normalize();
+		///Direction.Normalize();
 	}
 }
 
