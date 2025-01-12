@@ -71,7 +71,7 @@ void APongBall::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitive
 	Sprite->SetAllPhysicsLinearVelocity( FVector( 0.0f, 0.0f, 0.0f ) );
 
 	Direction = Direction.MirrorByVector(HitNormal);
-	UE_LOG(LogTemp, Warning, TEXT("Notify Hit"));
+
 	if (Other->ActorHasTag("PlayerPaddle") || Other->ActorHasTag("AIPaddle"))
 	{
 		APongPaddle* Paddle = Cast<APongPaddle>(Other);
